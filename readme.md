@@ -22,7 +22,7 @@ A simple way to auto-translate your WordPress content with Ovesio’s AI. No cod
 ---
 
 ## 3. Install & activate
-1. Upload the plugin folder to `/wp-content/plugins/` or use **Plugins → Add New → Upload**.
+1. Upload the **`ovesio`** folder (extracted from `ovesio-vX.X.X.zip`) to `/wp-content/plugins/`, or install it via **Plugins → Add New → Upload**.
 2. Activate it in **Plugins**.
 3. After activation the plugin creates its own table in the database – nothing you need to do.
 
