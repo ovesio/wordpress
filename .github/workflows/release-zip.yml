@@ -1,7 +1,7 @@
-name: build-zip
+name: build-plugin-zip
 on:
-  push:
-    tags: ['v*']
+  release:
+    types: [published]
 
 jobs:
   zip:
@@ -11,14 +11,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build plugin zip
-        run: |
-          VERSION=${GITHUB_REF_NAME}
-          git archive --format=zip --prefix=ovesio/ -o ovesio-${VERSION}.zip HEAD
+      - name: Set vars
+        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
-      - name: Upload to release
+      - name: Build zip with folder prefix
+        run: |
+          PLUGIN=ovesio
+          mkdir $PLUGIN
+          rsync -a ./ $PLUGIN/ --exclude '.git*' --exclude '.github'
+          zip -r ${PLUGIN}-${VERSION}.zip $PLUGIN
+
+      - name: Upload asset
         uses: softprops/action-gh-release@v1
         with:
-          files: ovesio-${{ github.ref_name }}.zip
+          files: ovesio-${{ env.VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
