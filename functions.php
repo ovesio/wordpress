@@ -50,6 +50,27 @@ function ovesio_sanitize_api_options($input)
     $input['api_url'] = sanitize_text_field($input['api_url'] ?? '');
     $input['security_hash'] = sanitize_text_field($input['security_hash']);
 
+    //check connection
+    if(!empty($input['api_key']) && !empty($input['api_url'])) {
+        try {
+            $api = new Ovesio\OvesioAI($input['api_key'], $input['api_url']);
+            $languages = $api->languages()->list();
+
+            if(empty($languages->success)) {
+                $input['api_key'] = '';
+                $input['api_url'] = '';
+
+                set_transient('ovesio_error', __('Invalid API connection data', 'ovesio'), 30);
+            } else {
+                delete_transient('ovesio_error');
+                set_transient('ovesio_success', __('API connection successful', 'ovesio'), 30);
+            }
+        } catch (Exception $e) {
+            set_transient('ovesio_error', __('Invalid API connection data', 'ovesio'), 30);
+        }
+    } else {
+        set_transient('ovesio_error', __('Please enter a valid API Key and API Url', 'ovesio'), 30);
+    }
     return $input;
 }
 

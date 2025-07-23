@@ -26,6 +26,12 @@ function ovesio_add_action_buttons($actions, $post)
         return $actions;
     }
 
+    //disable buttons if translation setting is empty
+    $translation_to = ovesio_get_option('ovesio_options', 'translation_to');
+    if(!$translation_to) {
+        return $actions;
+    }
+
     $table_name = $wpdb->prefix . 'ovesio_list';
 
     if (isset($post->ID)) {
