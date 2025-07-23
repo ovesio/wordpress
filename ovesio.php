@@ -37,7 +37,7 @@ require_once OVESIO_ADMIN_DIR . 'views/requests-list-tab.php';
 
 add_action('admin_notices', function() {
     if ($message = get_transient('ovesio_error')) {
-        echo '<div class="notice notice-error"><p>' . esc_html($message) . '</p></div>';
+        echo '<div class="notice notice-error"><p>' . wp_kses_post($message) . '</p></div>';
 
         delete_transient('ovesio_error');
     }
