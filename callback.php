@@ -63,9 +63,18 @@ function ovesio_wp_post_callback($type, $id, $callback)
     $table_name = $wpdb->prefix . 'ovesio_list';
     $target_lang = $callback->to;
 
-    $row = $wpdb->get_row(
-        $wpdb->prepare("SELECT * FROM {$table_name} WHERE resource = %s AND resource_id = %d AND lang = %s AND translate_id = %d AND translate_status = 0 AND content_id IS NULL", $type, $id, $target_lang, $callback->id)
+   /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
+    $query = $wpdb->prepare(
+        /* phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
+        "SELECT * FROM {$table_name} WHERE resource = %s AND resource_id = %d AND lang = %s AND translate_id = %d AND translate_status = 0 AND content_id IS NULL",
+        $type,
+        $id,
+        $target_lang,
+        $callback->id
     );
+
+    /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching */
+    $row = $wpdb->get_row( $query );
 
     if(empty($row->id)) {
         throw new Exception('Translation not found!');
@@ -233,6 +242,7 @@ function ovesio_wp_post_callback($type, $id, $callback)
     }
 
     // Update table
+    /* phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching */
     $wpdb->update(
         $table_name,
         [

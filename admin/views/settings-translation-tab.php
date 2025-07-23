@@ -97,7 +97,12 @@ function ovesio_translation_settings_page()
             <tr>
                 <th scope="row">
                     <label><?php esc_html_e('Translate to', 'ovesio'); ?></label>
-                    <p class="description"><?php _e('Select the languages you want your system to translate to. In order to enable new languages you need to add new languages in <a target="_blank" href="admin.php?page=mlang">polylang language</a> section.', 'ovesio'); ?></p>
+                    <p class="description"><?php
+                    /* translators: %s is the URL to the Polylang languages admin page. */
+                    $message = __( 'Select the languages you want your system to translate to. In order to enable new languages you need to add new languages in <a target="_blank" href="%s">Polylang language</a> section.', 'ovesio' );
+
+                    echo wp_kses_post( sprintf( $message, esc_url( admin_url( 'admin.php?page=mlang' ) ) ) );
+                    ?></p>
                 </th>
                 <td>
                     <div style="width:100%; display:block">
@@ -108,7 +113,7 @@ function ovesio_translation_settings_page()
                         <label style="width:25%;display:block;float:left">
                             <input type="checkbox" name="ovesio_options[translation_to][]" value="<?php echo esc_attr($language->code); ?>" <?php checked(in_array($language->code, (array) $translation_to), true); echo esc_attr($disabled); ?>>
 
-                            <?php echo _e(PLL_Language::get_predefined_flag( $pll_code ), 'ovesio');?>
+                            <?php echo wp_kses_post(PLL_Language::get_predefined_flag( $pll_code));?>
                             <?php echo esc_html($language->name); ?>
                         </label>
                     <?php } ?>

@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 if (!function_exists('pre')) {
     function pre($var, $exit = false)
     {
+        /* phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r */
         echo '<pre>' . esc_html( print_r( $var, true ) ) . "</pre>\n";
         if(!empty($exit)) exit();
     }
@@ -223,6 +224,7 @@ function ovesio_call_translation_ai($callback, $source, $target, $type, $id) {
 
             foreach($to_langs as $lang)
             {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Safe insert with $wpdb->insert and sanitized data
                 $wpdb->insert($table_name, [
                     'resource' => $type,
                     'resource_id' => $id,

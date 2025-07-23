@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Ovesio
  * Description: Get instant translations & contentn generator in over 27 languages, powered by the most advanced artificial intelligence technologies.
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: Ovesio
  * Text Domain: ovesio
  * Author URI: https://ovesio.com
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OVESIO_PLUGIN_VERSION', '1.2.2');
+define('OVESIO_PLUGIN_VERSION', '1.2.3');
 define('OVESIO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 
@@ -157,6 +157,7 @@ function ovesio_register_settings()
 
         set_transient('ovesio_error', '<strong>Ovesio</strong> requires <a href="https://wordpress.org/plugins/polylang/" target="_blank"><b>Polylang</b></a>. Works with both Pro or Free version', 120);
 
+        /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */
         if(isset($_GET['activate'])) {
             unset($_GET['activate']);
         }

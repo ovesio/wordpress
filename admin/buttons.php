@@ -62,10 +62,16 @@ function ovesio_add_action_buttons($actions, $post)
 
     // Get default language slug
     foreach ($languages as $lang) {
-        $sql = "SELECT translate_status FROM {$table_name} WHERE `resource` = %s AND resource_id = %d AND lang = %s ORDER BY id DESC LIMIT 1";
+        /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
+        $query = $wpdb->prepare(
+            /* phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
+            "SELECT `translate_status` FROM {$table_name} WHERE resource = %s AND resource_id = %d AND lang = %s ORDER BY id DESC LIMIT 1",
+            $type,
+            $id,
+            ovesio_polylang_code_conversion($lang['slug'])
+        );
 
-        $query = $wpdb->prepare($sql, [$type, $id, ovesio_polylang_code_conversion($lang['slug'])]);
-
+        /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching */
         $translation_exists = $wpdb->get_row($query);
 
         if(in_array($type, ['post', 'page', 'product'])){

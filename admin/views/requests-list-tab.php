@@ -47,7 +47,9 @@ function ovesio_requests_list_page() {
             $current    = $this->get_pagenum();
             $offset     = ($current - 1) * $per_page;
 
-            $search = isset($_REQUEST['s']) ? trim(wp_unslash($_REQUEST['s'])) : '';
+            /* phpcs:ignore WordPress.Security.NonceVerification.Recommended */
+            $search = isset( $_REQUEST['s'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) : '';
+
             $where  = '';
             $args   = [];
 
@@ -59,7 +61,17 @@ function ovesio_requests_list_page() {
 
             // Count
             $count_sql = "SELECT COUNT(*) FROM $table $where";
-            $total     = $args ? $wpdb->get_var($wpdb->prepare($count_sql, ...$args)) : $wpdb->get_var($count_sql);
+
+            if ( $args ) {
+                /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared */
+                $query = $wpdb->prepare( $count_sql, ...$args );
+            } else {
+                $query = $count_sql;
+            }
+
+
+            /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching */
+            $total     = $args ? $wpdb->get_var($query) : $wpdb->get_var($count_sql);
 
             // Data
             $data_sql = "SELECT id, resource, resource_id, lang, content_id, translate_status, created_at, link
@@ -69,6 +81,7 @@ function ovesio_requests_list_page() {
             $args[]   = $per_page;
             $args[]   = $offset;
 
+            /* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching */
             $this->items = $wpdb->get_results($wpdb->prepare($data_sql, $args), ARRAY_A);
 
             // Columns

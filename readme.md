@@ -1,7 +1,7 @@
 # Ovesio
 Tested up to: 6.8
 License: GPLv2 or later
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 A simple way to auto-translate your WordPress content with Ovesio’s AI. No coding, no fuss.
 
