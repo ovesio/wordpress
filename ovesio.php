@@ -3,18 +3,21 @@
 /**
  * Plugin Name: Ovesio
  * Description: Get instant translations & contentn generator in over 27 languages, powered by the most advanced artificial intelligence technologies.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Ovesio
  * Text Domain: ovesio
  * Author URI: https://ovesio.com
  * Tags: Ovesio, AI Translation, multilingual, translation, content generator, woocommerce product translations, automated translations
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: ovesio
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OVESIO_PLUGIN_VERSION', '1.2.1');
+define('OVESIO_PLUGIN_VERSION', '1.2.2');
 define('OVESIO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 
@@ -169,7 +172,7 @@ function ovesio_register_settings()
 add_action('admin_enqueue_scripts', function () {
     wp_enqueue_script(
         'ovesio-script',
-        plugin_dir_url(__FILE__) . 'assets/js/admin.js',
+        plugin_dir_url(__FILE__) . 'admin/assets/js/admin.js',
         ['jquery'],
         OVESIO_PLUGIN_VERSION,
         true
@@ -177,7 +180,7 @@ add_action('admin_enqueue_scripts', function () {
 
     wp_enqueue_style(
         'ovesio-style',
-        plugin_dir_url(__FILE__) . 'assets/css/admin.css',
+        plugin_dir_url(__FILE__) . 'admin/assets/css/admin.css',
         [],
         OVESIO_PLUGIN_VERSION
     );
@@ -187,17 +190,19 @@ add_action('admin_enqueue_scripts', function () {
 if (is_admin()) {
     add_action('admin_footer', function () {
         echo "<div class=\"ovesio-loader-overlay-container\" style=\"display:none;\">
-            <svg class=\"loader-overlay\" width=\"60\" height=\"60\" viewBox=\"0 0 50 50\">
-                <defs>
-                    <linearGradient id=\"gradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">
-                        <stop offset=\"0%\" stop-color=\"#000\"></stop>
-                        <stop offset=\"100%\" stop-color=\"#000\"></stop>
-                    </linearGradient>
-                </defs>
-                <circle cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke=\"url(#gradient)\" stroke-width=\"4\" stroke-dasharray=\"31.4 31.4\">
-                    <animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0 25 25\" to=\"360 25 25\" dur=\"1s\" repeatCount=\"indefinite\"></animateTransform>
+            <svg class=\"loader-overlay\" width=\"60\" height=\"60\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"#000\">
+                <circle cx=\"30\" cy=\"50\" r=\"10\">
+                    <animate attributeName=\"r\" values=\"10;5;10\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0s\"/>
+                    <animate attributeName=\"fill-opacity\" values=\"1;.3;1\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0s\"/>
                 </circle>
-                <text x=\"25\" y=\"28\" text-anchor=\"middle\" font-size=\"10\" fill=\"#000\" font-weight=\"bold\"></text>
+                <circle cx=\"50\" cy=\"50\" r=\"10\">
+                    <animate attributeName=\"r\" values=\"10;5;10\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0.2s\"/>
+                    <animate attributeName=\"fill-opacity\" values=\"1;.3;1\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0.2s\"/>
+                </circle>
+                <circle cx=\"70\" cy=\"50\" r=\"10\">
+                    <animate attributeName=\"r\" values=\"10;5;10\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0.4s\"/>
+                    <animate attributeName=\"fill-opacity\" values=\"1;.3;1\" dur=\"1s\" repeatCount=\"indefinite\" begin=\"0.4s\"/>
+                </circle>
             </svg>
         </div>";
     });

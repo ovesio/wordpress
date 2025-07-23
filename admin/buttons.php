@@ -62,9 +62,11 @@ function ovesio_add_action_buttons($actions, $post)
 
     // Get default language slug
     foreach ($languages as $lang) {
-        $translation_exists = $wpdb->get_row(
-            $wpdb->prepare("SELECT translate_status FROM {$table_name} WHERE resource = %d AND resource_id = %d AND lang = %s ORDER BY id DESC LIMIT 1", $type, $id, ovesio_polylang_code_conversion($lang['slug']))
-        );
+        $sql = "SELECT translate_status FROM {$table_name} WHERE `resource` = %s AND resource_id = %d AND lang = %s ORDER BY id DESC LIMIT 1";
+
+        $query = $wpdb->prepare($sql, [$type, $id, ovesio_polylang_code_conversion($lang['slug'])]);
+
+        $translation_exists = $wpdb->get_row($query);
 
         if(in_array($type, ['post', 'page', 'product'])){
             $post_lang = pll_get_post($id, $lang['slug']);
@@ -114,8 +116,7 @@ function ovesio_add_action_buttons($actions, $post)
 // AJAX translation requests
 add_action('wp_ajax_ovesio_translate_content', 'ovesio_translate_content_ajax_handler');
 function ovesio_translate_content_ajax_handler() {
-    if (!empty($_REQUEST['translate'])) {
-
+    if (!empty($_REQUEST['type']) && !empty($_REQUEST['id'])) {
         // Check if the request is valid
         if (!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['_wpnonce'])), 'ovesio-nonce')) {
             wp_send_json_error('Invalid nonce', 403);

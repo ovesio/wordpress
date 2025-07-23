@@ -70,10 +70,10 @@ function ovesio_translation_settings_page()
                 </th>
                 <td>
                     <label>
-                        <input type="radio" name="ovesio_options[translation_default_language]" value="system" <?php checked('system', $translation_default_language); ?>> <?php esc_html_e('Content defined language'); ?>
+                        <input type="radio" name="ovesio_options[translation_default_language]" value="system" <?php checked('system', $translation_default_language); ?>> <?php esc_html_e('Content defined language', 'ovesio'); ?>
                     </label>
                     <label>
-                        <input type="radio" name="ovesio_options[translation_default_language]" value="auto" <?php checked('auto', $translation_default_language); ?>> <?php esc_html_e('Auto detect'); ?>
+                        <input type="radio" name="ovesio_options[translation_default_language]" value="auto" <?php checked('auto', $translation_default_language); ?>> <?php esc_html_e('Auto detect', 'ovesio'); ?>
                     </label>
                 </td>
             </tr>
@@ -84,12 +84,12 @@ function ovesio_translation_settings_page()
                 </th>
                 <td>
                     <select id="ovesio_translation_workflow" name="ovesio_options[translation_workflow]">
-                        <option value=""><?php esc_html_e('- no workflow selected -'); ?></option>
+                        <option value=""><?php esc_html_e('- no workflow selected -', 'ovesio'); ?></option>
                         <?php foreach($workflows->data as $workflow) {
                             if($workflow->type !== 'translate')
                                 continue;
                             ?>
-                            <option value="<?php echo $workflow->id; ?>" <?php selected($translation_workflow, $workflow->id); ?>><?php esc_html_e($workflow->name); ?></option>
+                            <option value="<?php echo esc_attr($workflow->id); ?>" <?php selected($translation_workflow, $workflow->id); ?>><?php echo esc_html($workflow->name); ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -97,7 +97,7 @@ function ovesio_translation_settings_page()
             <tr>
                 <th scope="row">
                     <label><?php esc_html_e('Translate to', 'ovesio'); ?></label>
-                    <p class="description"><?php _e('Select the languages you want your sistem to translate to. In order to enable new languages you need to add new languages in <a target="_blank" href="' . admin_url('admin.php?page=mlang') . '">polylang language</a> section', 'ovesio'); ?></p>
+                    <p class="description"><?php _e('Select the languages you want your system to translate to. In order to enable new languages you need to add new languages in <a target="_blank" href="admin.php?page=mlang">polylang language</a> section.', 'ovesio'); ?></p>
                 </th>
                 <td>
                     <div style="width:100%; display:block">
@@ -106,10 +106,10 @@ function ovesio_translation_settings_page()
                         $disabled = !in_array($pll_code, $system_languages) ? 'disabled' : '';
                     ?>
                         <label style="width:25%;display:block;float:left">
-                            <input type="checkbox" name="ovesio_options[translation_to][]" value="<?php echo $language->code; ?>" <?php checked(in_array($language->code, (array) $translation_to), true); echo $disabled; ?>>
+                            <input type="checkbox" name="ovesio_options[translation_to][]" value="<?php echo esc_attr($language->code); ?>" <?php checked(in_array($language->code, (array) $translation_to), true); echo esc_attr($disabled); ?>>
 
-                            <?php echo PLL_Language::get_predefined_flag( $pll_code );?>
-                            <?php esc_html_e($language->name); ?>
+                            <?php echo _e(PLL_Language::get_predefined_flag( $pll_code ), 'ovesio');?>
+                            <?php echo esc_html($language->name); ?>
                         </label>
                     <?php } ?>
                     </div>

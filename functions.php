@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 if (!function_exists('pre')) {
     function pre($var, $exit = false)
     {
-        echo "<pre>".print_r($var, true)."</pre>\n";
+        echo '<pre>' . esc_html( print_r( $var, true ) ) . "</pre>\n";
         if(!empty($exit)) exit();
     }
 }
@@ -229,7 +229,7 @@ function ovesio_call_translation_ai($callback, $source, $target, $type, $id) {
                     'lang' => $lang,
                     'translate_id' => $translate_id,
                     'translate_hash' => md5(json_encode($callback)),
-                    'translate_date' => date('Y-m-d H:i:s'),
+                    'translate_date' => gmdate('Y-m-d H:i:s'),
                     'translate_status' => 0,
                     'link' => $link
                 ]);

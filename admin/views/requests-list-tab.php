@@ -69,7 +69,7 @@ function ovesio_requests_list_page() {
             $args[]   = $per_page;
             $args[]   = $offset;
 
-            $this->items = $wpdb->get_results($wpdb->prepare($data_sql, ...$args), ARRAY_A);
+            $this->items = $wpdb->get_results($wpdb->prepare($data_sql, $args), ARRAY_A);
 
             // Columns
             $columns  = $this->get_columns();
