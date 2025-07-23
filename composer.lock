@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5c66051f274fa5bed23120db48f1e2f8",
+    "packages": [
+        {
+            "name": "ovesio/ovesio-php",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ovesio/ovesio-php.git",
+                "reference": "638fe7b413f108d8329af9daca0a64770d0fdd6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ovesio/ovesio-php/zipball/638fe7b413f108d8329af9daca0a64770d0fdd6e",
+                "reference": "638fe7b413f108d8329af9daca0a64770d0fdd6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ovesio\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "AWeb Design SRL",
+                    "homepage": "https://ovesio.com"
+                }
+            ],
+            "description": "PHP client library for Ovesio.com API",
+            "support": {
+                "issues": "https://github.com/ovesio/ovesio-php/issues",
+                "source": "https://github.com/ovesio/ovesio-php/tree/v1.1.2"
+            },
+            "time": "2025-07-22T15:15:52+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

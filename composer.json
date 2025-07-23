@@ -1,0 +1,19 @@
+{
+    "name": "ovesio/ovesio-wordpress",
+    "description": "WordPress plugin that integrates Ovesio AI Translation and SEO tools.",
+    "version": "1.0.0",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=7.1",
+        "ovesio/ovesio-php": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "AWeb Design SRL",
+            "homepage": "https://ovesio.com"
+        }
+    ],
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
