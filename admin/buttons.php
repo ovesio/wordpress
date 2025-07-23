@@ -8,6 +8,8 @@ add_filter('post_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('page_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('post_tag_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('category_row_actions', 'ovesio_add_action_buttons', 10, 2);
+add_filter('product_cat_row_actions', 'ovesio_add_action_buttons', 10, 2);
+add_filter('product_tag_row_actions', 'ovesio_add_action_buttons', 10, 2);
 
 function ovesio_add_action_buttons($actions, $post)
 {
@@ -58,7 +60,7 @@ function ovesio_add_action_buttons($actions, $post)
             $wpdb->prepare("SELECT translate_status FROM {$table_name} WHERE resource = %d AND resource_id = %d AND lang = %s ORDER BY id DESC LIMIT 1", $type, $id, ovesio_polylang_code_conversion($lang['slug']))
         );
 
-        if(in_array($type, ['post', 'page'])){
+        if(in_array($type, ['post', 'page', 'product'])){
             $post_lang = pll_get_post($id, $lang['slug']);
         } else {
             $post_lang = pll_get_term($id, $lang['slug']);
@@ -135,6 +137,7 @@ function ovesio_translate_content_ajax_handler() {
         switch($type) {
             case 'post':
             case 'page':
+            case 'product':
                 $post = get_post($id);
 
                 if (!$post) {
@@ -167,6 +170,8 @@ function ovesio_translate_content_ajax_handler() {
                 break;
             case 'post_tag':
             case 'category':
+            case 'product_cat':
+            case 'product_tag':
                 $post = get_term($id);
 
                 if (!$post) {
@@ -193,6 +198,10 @@ function ovesio_translate_content_ajax_handler() {
                 ];
 
                 break;
+        }
+
+        if(empty($request)) {
+            wp_send_json_error('Invalid request', 400);
         }
 
         $response = ovesio_call_translation_ai($request, $source, $target_lang, $type, $id);

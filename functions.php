@@ -185,7 +185,7 @@ function ovesio_call_translation_ai($callback, $source, $target, $type, $id) {
             ->from($source)
             ->to($to_langs)
             ->useExistingTranslation(true)
-            ->callbackUrl(home_url('/ovesio-callback/?security_hash=' . $security_hash))
+            ->callbackUrl(home_url('/index.php?ovesio_callback=1&security_hash=' . $security_hash))
             ->data($callback, $ref)
             ->filterByValue();
 

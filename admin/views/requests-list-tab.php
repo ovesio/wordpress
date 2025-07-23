@@ -90,9 +90,9 @@ function ovesio_requests_list_page() {
                 'post' => '<a href="' . admin_url('post.php?post=%d&action=edit') . '" target="_blank">%s</a>',
                 'post_tag' => '<a href="' . admin_url('term.php?taxonomy=post_tag&tag_ID=%d') . '" target="_blank">%s</a>',
                 'category' => '<a href="' . admin_url('term.php?taxonomy=category&tag_ID=%d') . '" target="_blank">%s</a>',
-                // 'product' => '<a href="' . admin_url('post.php?post=%d&action=edit') . '" target="_blank">%s</a>',
-                // 'product_cat' => '<a href="' . admin_url('edit-tags.php?taxonomy=product_cat&tag_ID=%d') . '" target="_blank">%s</a>',
-                // 'product_tag' => '<a href="' . admin_url('edit-tags.php?taxonomy=product_tag&tag_ID=%d') . '" target="_blank">%s</a>',
+                'product' => '<a href="' . admin_url('post.php?post=%d&action=edit') . '" target="_blank">%s</a>',
+                'product_cat' => '<a href="' . admin_url('edit-tags.php?taxonomy=product_cat&tag_ID=%d') . '" target="_blank">%s</a>',
+                'product_tag' => '<a href="' . admin_url('edit-tags.php?taxonomy=product_tag&tag_ID=%d') . '" target="_blank">%s</a>',
             ];
 
             switch ($column_name) {
@@ -105,7 +105,7 @@ function ovesio_requests_list_page() {
                         return '-';
                     }
                 case 'content':
-                    if(isset($links[$item['resource']])) {
+                    if(isset($links[$item['resource']]) && $item['content_id']) {
                         return sprintf($links[$item['resource']], $item['content_id'], $item['resource'] . ' (' . $item['content_id'] . ')');
                     } else {
                         return '-';

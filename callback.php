@@ -5,13 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Register public callback url
-add_action('init', 'ovesio_add_public_callback');
 add_filter('query_vars', 'ovesio_register_callback_query_var');
 add_action('template_redirect', 'ovesio_handle_public_endpoint');
-
-function ovesio_add_public_callback() {
-    add_rewrite_rule('^ovesio-callback$', 'index.php?ovesio_callback=1', 'top');
-}
 
 function ovesio_register_callback_query_var($vars) {
     $vars[] = 'ovesio_callback';
@@ -34,7 +29,7 @@ function ovesio_handle_public_endpoint() {
             list($type, $id) = explode('/', $callback->ref);
 
             try {
-                if(in_array($type, ['page', 'post', 'product', 'post_tag', 'category'])) {
+                if(in_array($type, ['page', 'post', 'post_tag', 'category', 'product', 'product_cat', 'product_tag'])) {
                     ovesio_wp_post_callback($type, $id, $callback);
                 } else {
                     throw new Exception('Unsupported resource type: '. $type);
@@ -166,7 +161,7 @@ function ovesio_wp_post_callback($type, $id, $callback)
                 ovesio_set_product_type($id, $new_post_id);
             }
         }
-    } elseif(in_array($type, ['post_tag', 'category'])) {
+    } elseif(in_array($type, ['post_tag', 'category', 'product_cat', 'product_tag'])) {
         $term = (array) get_term($id, $type);
         if (is_wp_error($term) || !$term) {
             wp_send_json_error('Term not found.', 404);

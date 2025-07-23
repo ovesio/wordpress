@@ -1,7 +1,7 @@
 {
     "name": "ovesio/ovesio-wordpress",
     "description": "WordPress plugin that integrates Ovesio AI Translation and SEO tools.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "type": "wordpress-plugin",
     "require": {
         "php": ">=7.1",

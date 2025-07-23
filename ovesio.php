@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Ovesio
  * Description: Get instant translations & contentn generator in over 27 languages, powered by the most advanced artificial intelligence technologies.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Ovesio
  * Text Domain: ovesio
  * Author URI: https://ovesio.com
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OVESIO_PLUGIN_VERSION', '1.0.0');
+define('OVESIO_PLUGIN_VERSION', '1.1.0');
 define('OVESIO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 
@@ -22,7 +22,10 @@ define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Helper functions
-require_once OVESIO_ADMIN_DIR . 'functions.php';
+require_once OVESIO_PLUGIN_DIR . 'functions.php';
+require_once OVESIO_PLUGIN_DIR . 'callback.php';
+
+// Action Buttons
 require_once OVESIO_ADMIN_DIR . 'buttons.php';
 
 // Views
@@ -30,7 +33,6 @@ require_once OVESIO_ADMIN_DIR . 'views/settings-page-header.php';
 require_once OVESIO_ADMIN_DIR . 'views/settings-api-tab.php';
 require_once OVESIO_ADMIN_DIR . 'views/settings-translation-tab.php';
 require_once OVESIO_ADMIN_DIR . 'views/requests-list-tab.php';
-require_once OVESIO_PLUGIN_DIR . 'callback.php';
 
 
 add_action('admin_notices', function() {
