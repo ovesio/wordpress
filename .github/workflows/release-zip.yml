@@ -3,6 +3,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   zip:
     runs-on: ubuntu-latest
@@ -11,19 +14,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set vars
-        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
       - name: Build zip with folder prefix
         run: |
           PLUGIN=ovesio
-          mkdir $PLUGIN
-          rsync -a ./ $PLUGIN/ --exclude '.git*' --exclude '.github'
-          zip -r ${PLUGIN}-${VERSION}.zip $PLUGIN
+          mkdir "$PLUGIN"
+          rsync -a ./ "$PLUGIN"/ --exclude '.git*' --exclude '.github'
+          zip -r "${PLUGIN}-${GITHUB_REF_NAME}.zip" "$PLUGIN"
 
       - name: Upload asset
         uses: softprops/action-gh-release@v1
         with:
-          files: ovesio-${{ env.VERSION }}.zip
+          files: ovesio-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
