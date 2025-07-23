@@ -10,6 +10,7 @@ add_filter('post_tag_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('category_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('product_cat_row_actions', 'ovesio_add_action_buttons', 10, 2);
 add_filter('product_tag_row_actions', 'ovesio_add_action_buttons', 10, 2);
+add_filter('elementor_library_row_actions', 'ovesio_add_action_buttons', 10, 2);
 
 function ovesio_add_action_buttons($actions, $post)
 {
@@ -27,7 +28,6 @@ function ovesio_add_action_buttons($actions, $post)
 
     $table_name = $wpdb->prefix . 'ovesio_list';
 
-    $case = null;
     if (isset($post->ID)) {
         // Work on posts
         $sourceLang = pll_get_post_language($post->ID);
@@ -138,6 +138,7 @@ function ovesio_translate_content_ajax_handler() {
             case 'post':
             case 'page':
             case 'product':
+            case 'elementor_library':
                 $post = get_post($id);
 
                 if (!$post) {
@@ -166,6 +167,27 @@ function ovesio_translate_content_ajax_handler() {
                         'value' => $post->post_excerpt,
                     ],
                 ];
+
+                // Elementor compatibility
+                // if ( did_action('elementor/loaded') ) {
+                //     $doc = \Elementor\Plugin::$instance->documents->get( $id );
+                //     if ( $doc && $doc->is_built_with_elementor() ) {
+                //         $raw = get_post_meta( $id, '_elementor_data', true );
+                //         if ( $raw ) {
+                //             $request[] = [
+                //                 'key'   => '_elementor_data',
+                //                 'value' => $raw,
+                //             ];
+                //         }
+                //         $settings = get_post_meta( $id, '_elementor_page_settings', true );
+                //         if ( ! empty( $settings ) ) {
+                //             $request[] = [
+                //                 'key'   => '_elementor_page_settings',
+                //                 'value' => wp_json_encode( $settings ),
+                //             ];
+                //         }
+                //     }
+                // }
 
                 break;
             case 'post_tag':

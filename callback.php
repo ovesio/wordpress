@@ -89,6 +89,16 @@ function ovesio_wp_post_callback($type, $id, $callback)
             wp_send_json_error('Post creation failed: ' . $new_post_id->get_error_message(), 500);
         }
 
+        //Elementor compatibillity
+        // if(!empty($post['_elementor_data']))
+        // {
+        //     update_post_meta($new_post_id, '_elementor_data', $post['_elementor_data']);
+        // }
+        // if(!empty($post['_elementor_page_settings']))
+        // {
+        //     update_post_meta($new_post_id, '_elementor_page_settings', json_decode( $content->value, true ));
+        // }
+
         // Copy custom fields
         $meta = get_post_meta($id);
         if (!empty($meta)) {
