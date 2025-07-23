@@ -1,0 +1,20 @@
+name: build-zip
+on:
+  push:
+    tags: ['v*']   # când faci tag v1.0.0 etc.
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create zip with prefix
+        run: git archive --format=zip --prefix=ovesio/ $GITHUB_SHA -o ovesio.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ovesio.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
