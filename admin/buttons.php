@@ -182,25 +182,34 @@ function ovesio_translate_content_ajax_handler() {
                 ];
 
                 // Elementor compatibility
-                // if ( did_action('elementor/loaded') ) {
-                //     $doc = \Elementor\Plugin::$instance->documents->get( $id );
-                //     if ( $doc && $doc->is_built_with_elementor() ) {
-                //         $raw = get_post_meta( $id, '_elementor_data', true );
-                //         if ( $raw ) {
-                //             $request[] = [
-                //                 'key'   => '_elementor_data',
-                //                 'value' => $raw,
-                //             ];
-                //         }
-                //         $settings = get_post_meta( $id, '_elementor_page_settings', true );
-                //         if ( ! empty( $settings ) ) {
-                //             $request[] = [
-                //                 'key'   => '_elementor_page_settings',
-                //                 'value' => wp_json_encode( $settings ),
-                //             ];
-                //         }
-                //     }
-                // }
+                if ( did_action('elementor/loaded') ) {
+                    $doc = \Elementor\Plugin::$instance->documents->get( $id );
+                    if ( $doc && $doc->is_built_with_elementor() ) {
+                        $raw = get_post_meta( $id, '_elementor_data', true );
+                        if ($raw) {
+                            $raw_data = json_decode($raw, true);
+                            if($raw_data) {
+                                traverse_elements_with_id($raw_data, function($item) use(&$request) {
+                                    if(!empty($item['settings']) && is_array($item['settings'])) {
+                                        foreach($item['settings'] as $setting_key => $setting_value) {
+                                            $request[] = [
+                                                'key' => 'e:' . $item['id'] . '/' . $setting_key,
+                                                'value' => $setting_value
+                                            ];
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        // $settings = get_post_meta( $id, '_elementor_page_settings', true );
+                        // if ( ! empty( $settings ) ) {
+                        //     $request[] = [
+                        //         'key'   => '_elementor_page_settings',
+                        //         'value' => wp_json_encode( $settings ),
+                        //     ];
+                        // }
+                    }
+                }
 
                 break;
             case 'post_tag':

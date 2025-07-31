@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Ovesio
  * Description: Get instant translations & contentn generator in over 27 languages, powered by the most advanced artificial intelligence technologies.
- * Version: 1.2.3
+ * Version: 1.3.0
  * Author: Ovesio
  * Text Domain: ovesio
  * Author URI: https://ovesio.com
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OVESIO_PLUGIN_VERSION', '1.2.3');
+define('OVESIO_PLUGIN_VERSION', '1.3.0');
 define('OVESIO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 
@@ -107,7 +107,7 @@ function ovesio_create_table() {
         INDEX translate_date (translate_date),
         INDEX translate_status (translate_status),
         INDEX created_at (created_at)
-  ) $charset_collate;";
+    ) $charset_collate;";
 
     dbDelta($sql);
 }
@@ -123,7 +123,7 @@ function ovesio_admin_menu()
         'ovesio',
         'ovesio_settings_tabs',
         'dashicons-admin-site-alt3',
- );
+    );
 
     add_submenu_page(
         'ovesio',
@@ -132,7 +132,7 @@ function ovesio_admin_menu()
         'manage_options',
         'ovesio_settings',
         'ovesio_settings_tabs'
- );
+    );
 
     add_submenu_page(
         'ovesio',
@@ -141,7 +141,7 @@ function ovesio_admin_menu()
         'manage_options',
         'ovesio_requests',
         'ovesio_requests_list_page',
- );
+    );
 
     // Elimină submeniul automat adăugat
     remove_submenu_page('ovesio', 'ovesio');

@@ -46,16 +46,6 @@ function ovesio_handle_public_endpoint() {
     }
 }
 
-// Flush rules la activare
-register_activation_hook(__FILE__, function () {
-    ovesio_add_public_callback();
-    flush_rewrite_rules();
-});
-
-register_deactivation_hook(__FILE__, function () {
-    flush_rewrite_rules();
-});
-
 function ovesio_wp_post_callback($type, $id, $callback)
 {
     global $wpdb;
@@ -86,30 +76,59 @@ function ovesio_wp_post_callback($type, $id, $callback)
         $post = (array) get_post($id);
         unset($post['ID']);
 
-        $post['post_status'] = $post_status;
-        foreach($callback->content as $content) {
-            $post[$content->key] = $content->value;
+        if (is_wp_error($post) || !$post) {
+            wp_send_json_error('Post not found.', 404);
         }
 
+        // Get existing translations
+        $translations = pll_get_post_translations($id);
+
+        //Check if it's an update
+        if (isset($translations[$target_lang])) {
+            $post['ID'] = $translations[$target_lang];
+        }
+
+        $post['post_status'] = $post_status;
+        $elementor = [];
+        foreach($callback->content as $content) {
+            if(substr($content->key, 0, 2) == 'e:') {
+                $content->key = substr($content->key, 2, strlen($content->key));
+                $elementor[] = (array) $content;
+            } else {
+                $post[$content->key] = $content->value;
+            }
+        }
+
+        // if(empty($post['ID'])) {
+        //     $new_post_id = wp_update_post($post);
+        // } else {
         $new_post_id = wp_insert_post($post);
+        // }
 
         // Check if the post was created successfully
         if (is_wp_error($new_post_id)) {
             wp_send_json_error('Post creation failed: ' . $new_post_id->get_error_message(), 500);
         }
 
-        //Elementor compatibillity
-        // if(!empty($post['_elementor_data']))
-        // {
-        //     update_post_meta($new_post_id, '_elementor_data', $post['_elementor_data']);
-        // }
-        // if(!empty($post['_elementor_page_settings']))
-        // {
-        //     update_post_meta($new_post_id, '_elementor_page_settings', json_decode( $content->value, true ));
-        // }
-
         // Copy custom fields
         $meta = get_post_meta($id);
+        if($elementor && !empty($meta['_elementor_data'][0])) {
+            // $doc = \Elementor\Plugin::$instance->documents->get( $id );
+            // if ( $doc && $doc->is_built_with_elementor() ) {
+                $raw_data = json_decode($meta['_elementor_data'][0], true);
+                if($raw_data) {
+                    $elementor_meta_update = apply_translations_to_elements($raw_data, $elementor);
+                    file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log-callback.txt', date('c') . "\n" . print_r($elementor_meta_update, true) . "\n\n", FILE_APPEND);
+                    add_post_meta($new_post_id, '_elementor_data', $elementor_meta_update);
+                }
+            // }
+
+            // if(!empty($post['_elementor_page_settings']))
+            // {
+            //     update_post_meta($new_post_id, '_elementor_page_settings', $post['_elementor_page_settings']);
+            // }
+        }
+
         if (!empty($meta)) {
             foreach ($meta as $key => $values) {
                 // Skip Polylang and WordPress core fields if needed
@@ -141,9 +160,6 @@ function ovesio_wp_post_callback($type, $id, $callback)
         if (function_exists('pll_set_post_language')) {
             // Set the language for the new post
             pll_set_post_language($new_post_id, $target_lang);
-
-            // Get existing translations
-            $translations = pll_get_post_translations($id);
 
             // Add the new translation
             if (!isset($translations[$target_lang])) {
@@ -186,8 +202,10 @@ function ovesio_wp_post_callback($type, $id, $callback)
             wp_send_json_error('Term not found.', 404);
         }
 
+        $translations = pll_get_term_translations($id);
+
         foreach($callback->content as $content) {
-            $term[$content->key] = $content->value;
+            $term[$content->key] = esc_html(wp_unslash($content->value));
         }
 
         $name = $term['name'];
@@ -206,7 +224,13 @@ function ovesio_wp_post_callback($type, $id, $callback)
             $term['slug'] = sanitize_title($name);
         }
 
-        $new_term = wp_insert_term($name, $type, $term);
+        //Check if it's an update
+        if (isset($translations[$target_lang])) {
+            $term['name'] = $name;
+            $new_term = wp_update_term($translations[$target_lang], $type, $term);
+        } else {
+            $new_term = wp_insert_term($name, $type, $term);
+        }
 
         if (is_wp_error($new_term)) {
             wp_send_json_error('Term creation failed: ' . $new_term->get_error_message(), 500);
@@ -225,7 +249,6 @@ function ovesio_wp_post_callback($type, $id, $callback)
 
         // Get existing translations
         if (function_exists('pll_get_term_translations') && function_exists('pll_save_term_translations')) {
-            $translations = pll_get_term_translations($id);
             if (!isset($translations[$target_lang])) {
                 // Add the new translation
                 $translations[$target_lang] = $new_term['term_id'];

@@ -145,6 +145,40 @@ function ovesio_tags_relations($id, $target_lang) {
     return array_column($catLang, $target_lang);
 }
 
+function traverse_elements_with_id(array $elements, callable $callback) {
+    foreach ($elements as $element) {
+        // Dacă are ID, îl procesăm
+        if (isset($element['id'])) {
+            $callback($element);
+        }
+
+        // Dacă are copii (sub-elemente), continuăm recursiv
+        if (isset($element['elements']) && is_array($element['elements'])) {
+            traverse_elements_with_id($element['elements'], $callback);
+        }
+    }
+}
+
+function apply_translations_to_elements(array $elements, array $translations): array {
+    foreach ($elements as &$element) {
+        if (isset($element['id']) && isset($element['settings']) && is_array($element['settings'])) {
+            foreach ($translations as $translation) {
+                [$target_id, $setting_key] = explode('/', $translation['key'], 2);
+
+                if ($element['id'] === $target_id && array_key_exists($setting_key, $element['settings'])) {
+                    $element['settings'][$setting_key] = $translation['value'];
+                }
+            }
+        }
+
+        if (isset($element['elements']) && is_array($element['elements'])) {
+            $element['elements'] = apply_translations_to_elements($element['elements'], $translations);
+        }
+    }
+
+    return $elements;
+}
+
 // Get a setting from the plugin options
 function ovesio_get_option($optionName, $key = null, $default = '') {
     $options = get_option($optionName, array());
