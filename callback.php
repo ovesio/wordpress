@@ -118,7 +118,6 @@ function ovesio_wp_post_callback($type, $id, $callback)
                 $raw_data = json_decode($meta['_elementor_data'][0], true);
                 if($raw_data) {
                     $elementor_meta_update = apply_translations_to_elements($raw_data, $elementor);
-                    file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log-callback.txt', date('c') . "\n" . print_r($elementor_meta_update, true) . "\n\n", FILE_APPEND);
                     add_post_meta($new_post_id, '_elementor_data', $elementor_meta_update);
                 }
             // }
