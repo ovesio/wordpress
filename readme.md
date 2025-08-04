@@ -1,8 +1,11 @@
 # Ovesio
 Tested up to: 6.8
+Requires at least: 6.2
+Requires PHP: 7.2
 License: GPLv2 or later
 Stable tag: 1.3.0
-Contributors: awebro
+Contributors: ovesio, awebro
+Tags: multilingual, translate, translation, language, localization
 
 A simple way to auto-translate your WordPress content with Ovesio’s AI. No coding, no fuss.
 
@@ -61,7 +64,25 @@ Click **Save Changes** again.
 
 ---
 
-## 6. Troubleshooting
+## 6. What the service is and what it is used for.
+This plugin helps you to translate your website content using Ovesio.com services. You can use it to translate pages, posts, taxonomies, categories and woocommerce products.
+
+---
+
+## 7. What data is sent and when.
+This plugin only sends data to ovesio.com when you manually trigger a translation by pressing the translate link which is presend in these sections: post/page/taxonomy/cateory/product. Your API keys are stored securely in your WordPress database and are never shared with the plugin developer.
+The default domain used for sending data is https://api.ovesio.com/v1/ but in some cases ovesio.com can provide you a different subdomain of the same domain name in order to be used for translation service.
+We do not collect sensitive data or personal information.
+
+---
+
+## 8. Ovesio terms of service and privacy policy.
+Please check ovesio.com terms and conditions here: https://ovesio.com/information/terms
+and the privacy policy here: https://ovesio.com/information/privacy
+
+---
+
+## 9. Troubleshooting
 - **Nothing happens when I click Translate**: Check you are logged in as a user who can edit posts. Make sure the API key is valid.
 - **Callback not working / 404**: Re-save permalinks. Ensure the **Security Hash** in the URL matches the one in settings.
 - **Translations go to the wrong status**: Change **Post status** in Translation settings.
@@ -69,7 +90,7 @@ Click **Save Changes** again.
 
 ---
 
-## 7. FAQ
+## 10. FAQ
 **Do I need to edit code?**
 No. Everything is done from the WordPress admin.
 
@@ -84,7 +105,7 @@ Yes. Products and product categories/tags are supported if WooCommerce is active
 
 ---
 
-## 8. Support & feedback
+## 11. Support & feedback
 - Open an issue on GitHub (if you host the code there)
 
 ---
