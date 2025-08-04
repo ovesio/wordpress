@@ -113,7 +113,7 @@ function ovesio_translation_settings_page()
                         <label style="width:25%;display:block;float:left">
                             <input type="checkbox" name="ovesio_options[translation_to][]" value="<?php echo esc_attr($language->code); ?>" <?php checked(in_array($language->code, (array) $translation_to), true); echo esc_attr($disabled); ?>>
 
-                            <?php echo wp_kses_post(PLL_Language::get_predefined_flag( $pll_code));?>
+                            <?php echo PLL_Language::get_predefined_flag( $pll_code);  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                             <?php echo esc_html($language->name); ?>
                         </label>
                     <?php } ?>
