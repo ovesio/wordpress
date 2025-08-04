@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'ovesio/ovesio-wordpress',
-        'pretty_version' => '1.0.0',
-        'version' => '1.0.0.0',
+        'pretty_version' => '1.3.0',
+        'version' => '1.3.0.0',
         'reference' => NULL,
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
@@ -11,17 +11,17 @@
     ),
     'versions' => array(
         'ovesio/ovesio-php' => array(
-            'pretty_version' => '1.1.2',
-            'version' => '1.1.2.1',
-            'reference' => '638fe7b413f108d8329af9daca0a64770d0fdd6e',
+            'pretty_version' => '1.1.3',
+            'version' => '1.1.3.0',
+            'reference' => '5356558836c3e9f50ee6b99dba119378645c5c6e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ovesio/ovesio-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
         'ovesio/ovesio-wordpress' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => '1.3.0',
+            'version' => '1.3.0.0',
             'reference' => NULL,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',

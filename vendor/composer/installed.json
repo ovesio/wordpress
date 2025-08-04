@@ -2,23 +2,23 @@
     "packages": [
         {
             "name": "ovesio/ovesio-php",
-            "version": "1.1.2",
-            "version_normalized": "1.1.2.1",
+            "version": "1.1.3",
+            "version_normalized": "1.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ovesio/ovesio-php.git",
-                "reference": "638fe7b413f108d8329af9daca0a64770d0fdd6e"
+                "reference": "5356558836c3e9f50ee6b99dba119378645c5c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ovesio/ovesio-php/zipball/638fe7b413f108d8329af9daca0a64770d0fdd6e",
-                "reference": "638fe7b413f108d8329af9daca0a64770d0fdd6e",
+                "url": "https://api.github.com/repos/ovesio/ovesio-php/zipball/5356558836c3e9f50ee6b99dba119378645c5c6e",
+                "reference": "5356558836c3e9f50ee6b99dba119378645c5c6e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
-            "time": "2025-07-22T15:15:52+00:00",
+            "time": "2025-08-04T14:41:38+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -39,7 +39,7 @@
             "description": "PHP client library for Ovesio.com API",
             "support": {
                 "issues": "https://github.com/ovesio/ovesio-php/issues",
-                "source": "https://github.com/ovesio/ovesio-php/tree/v1.1.2"
+                "source": "https://github.com/ovesio/ovesio-php/tree/v1.1.3"
             },
             "install-path": "../ovesio/ovesio-php"
         }
