@@ -117,7 +117,7 @@ function ovesio_wp_post_callback($type, $id, $callback)
             // if ( $doc && $doc->is_built_with_elementor() ) {
                 $raw_data = json_decode($meta['_elementor_data'][0], true);
                 if($raw_data) {
-                    $elementor_meta_update = apply_translations_to_elements($raw_data, $elementor);
+                    $elementor_meta_update = ovesio_apply_translations_to_elements($raw_data, $elementor);
                     add_post_meta($new_post_id, '_elementor_data', $elementor_meta_update);
                 }
             // }

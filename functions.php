@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!function_exists('pre')) {
-    function pre($var, $exit = false)
+if (!function_exists('ovesio_pre')) {
+    function ovesio_pre($var, $exit = false)
     {
         /* phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r */
         echo '<pre>' . esc_html( print_r( $var, true ) ) . "</pre>\n";
@@ -145,7 +145,7 @@ function ovesio_tags_relations($id, $target_lang) {
     return array_column($catLang, $target_lang);
 }
 
-function traverse_elements_with_id(array $elements, callable $callback) {
+function ovesio_traverse_elements_with_id(array $elements, callable $callback) {
     foreach ($elements as $element) {
         // Dacă are ID, îl procesăm
         if (isset($element['id'])) {
@@ -154,12 +154,12 @@ function traverse_elements_with_id(array $elements, callable $callback) {
 
         // Dacă are copii (sub-elemente), continuăm recursiv
         if (isset($element['elements']) && is_array($element['elements'])) {
-            traverse_elements_with_id($element['elements'], $callback);
+            ovesio_traverse_elements_with_id($element['elements'], $callback);
         }
     }
 }
 
-function apply_translations_to_elements(array $elements, array $translations): array {
+function ovesio_apply_translations_to_elements(array $elements, array $translations): array {
     foreach ($elements as &$element) {
         if (isset($element['id']) && isset($element['settings']) && is_array($element['settings'])) {
             foreach ($translations as $translation) {
@@ -172,7 +172,7 @@ function apply_translations_to_elements(array $elements, array $translations): a
         }
 
         if (isset($element['elements']) && is_array($element['elements'])) {
-            $element['elements'] = apply_translations_to_elements($element['elements'], $translations);
+            $element['elements'] = ovesio_apply_translations_to_elements($element['elements'], $translations);
         }
     }
 

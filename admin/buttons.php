@@ -189,7 +189,7 @@ function ovesio_translate_content_ajax_handler() {
                         if ($raw) {
                             $raw_data = json_decode($raw, true);
                             if($raw_data) {
-                                traverse_elements_with_id($raw_data, function($item) use(&$request) {
+                                ovesio_traverse_elements_with_id($raw_data, function($item) use(&$request) {
                                     if(!empty($item['settings']) && is_array($item['settings'])) {
                                         foreach($item['settings'] as $setting_key => $setting_value) {
                                             $request[] = [
