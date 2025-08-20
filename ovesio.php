@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Ovesio
  * Description: Get instant translations & contentn generator in over 27 languages, powered by the most advanced artificial intelligence technologies.
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: Ovesio
  * Text Domain: ovesio
  * Author URI: https://ovesio.com
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OVESIO_PLUGIN_VERSION', '1.3.3');
+define('OVESIO_PLUGIN_VERSION', '1.3.4');
 define('OVESIO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('OVESIO_ADMIN_DIR', OVESIO_PLUGIN_DIR . 'admin/');
 
