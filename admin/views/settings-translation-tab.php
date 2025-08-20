@@ -113,7 +113,7 @@ function ovesio_translation_settings_page()
                         <label style="width:25%;display:block;float:left">
                             <input type="checkbox" name="ovesio_options[translation_to][]" value="<?php echo esc_attr($language->code); ?>" <?php checked(in_array($language->code, (array) $translation_to), true); echo esc_attr($disabled); ?>>
 
-                            <?php echo PLL_Language::get_predefined_flag( $pll_code);  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            <img src="<?php echo plugins_url( 'admin/assets/flags/' . ovesio_lang_to_country_code($language->code) . '.png', OVESIO_ADMIN_DIR ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" width="16" height="11" style="width: 16px; height: 11px;">
                             <?php echo esc_html($language->name); ?>
                         </label>
                     <?php } ?>
@@ -134,6 +134,10 @@ function ovesio_translation_settings_page()
                 </td>
             </tr>
         </table>
+        <p class="description">
+            <?php esc_html_e('Here\'s a complete tutorial on how to get the most out of the', 'ovesio'); ?>
+            <a target="_blank" href='https://ovesio.com/blog/ovesio-ai-translation-wordpress-plugin'><?php esc_html_e('Ovesio WordPress Plugin', 'ovesio'); ?></a>
+        </p>
         <?php submit_button(); ?>
     </form>
 <?php

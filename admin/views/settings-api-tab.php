@@ -37,6 +37,10 @@ function ovesio_api_page()
                 </td>
             </tr>
         </table>
+        <p class="description">
+            <?php esc_html_e('Here\'s a complete tutorial on how to get the most out of the', 'ovesio'); ?>
+            <a target="_blank" href='https://ovesio.com/blog/ovesio-ai-translation-wordpress-plugin'><?php esc_html_e('Ovesio WordPress Plugin', 'ovesio'); ?></a>
+        </p>
         <?php submit_button(); ?>
     </form>
 <?php

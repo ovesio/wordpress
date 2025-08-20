@@ -3,7 +3,7 @@ Tested up to: 6.8
 Requires at least: 6.2
 Requires PHP: 7.2
 License: GPLv2 or later
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 Contributors: ovesio, awebro
 Tags: multilingual, translate, translation, language, localization
 
@@ -11,19 +11,21 @@ Automatically translate your WordPress into 27+ languages with Ovesio's [AI Tran
 
 == Description ==
 
+Automatically translate your WordPress into 29+ languages with Ovesio's [AI Translation ](https://ovesio.com/) Engine.
+
 ### Scale To International Markets In Hours With Multilingual AI ###
 
 * 100% no-code setup and use
 * Best AI translation quality on the market
 * Built-in quality assurance through Ovesio's [AI Inspector](https://ovesio.com/blog/what-is-the-ovesio-ai-inspector)
 
-https://www.youtube.com/watch?v=qLORdkCpINA
-
-Translate all your WooCommerce products into 27+ languages with only one click.
+https://www.youtube.com/watch?v=msq4YIA6LWk
 
 Supercharge your content with multilingual AI.
 
 Translate posts, pages, and products with one click, powered by Ovesio.
+
+Here's a complete tutorial on how to get the most out of the [Ovesio WordPress Plugin](https://ovesio.com/blog/ovesio-ai-translation-wordpress-plugin).
 
 == What this plugin does ==
 – Adds Translate buttons under Posts, Pages, Categories, Tags (and WooCommerce products if you use WooCommerce).
@@ -122,6 +124,11 @@ Yes. Products and product categories/tags are supported if WooCommerce is active
 6. Ovesio WP Plugin Example of new buttons on hover
 
 == Changelog ==
+= 1.3.4 =
+Readme file updated
+New tutorial link added
+Missing flags fix
+
 = 1.3.3 =
 Readme file updated
 

@@ -30,6 +30,25 @@ function ovesio_polylang_code_conversion($code) {
     return $code;
 }
 
+function ovesio_lang_to_country_code($code)
+{
+    $codes = [
+        'cs' => 'cz',
+        'et' => 'ee',
+        'ga' => 'ie',
+        'pt-br' => 'br',
+        'sr' => 'rs',
+        'sl' => 'si',
+        'sv' => 'se',
+    ];
+
+    if(isset($codes[$code])) {
+        return $codes[$code];
+    }
+
+    return $code;
+}
+
 function ovesio_polylang_to_ovesio_code_conversion($code) {
     $translation_to = (array) ovesio_get_option('ovesio_options', 'translation_to');
 
